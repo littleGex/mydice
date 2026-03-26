@@ -1,41 +1,33 @@
 const dice = document.getElementById('dice');
 const resultText = document.getElementById('result');
 
-dice.addEventListener('click', () => {
-  // Generate random number 1-6
-  const rollResult = Math.floor(Math.random() * 6) + 1;
-  
-  // Add extra 360-degree spins for the animation
-  const randomSpins = Math.floor(Math.random() * 3) + 2; 
-  let x = 0, y = 0;
+let currentX = 0;
+let currentY = 0;
 
-  // Determine which way to rotate based on the result
-  switch (rollResult) {
-    case 1: x = 0; y = 0; break;       // Front
-    case 2: x = -90; y = 0; break;     // Top
-    case 3: x = 0; y = -90; break;     // Right
-    case 4: x = 0; y = 90; break;      // Left
-    case 5: x = 90; y = 0; break;      // Bottom
-    case 6: x = 0; y = 180; break;     // Back
+dice.addEventListener('click', () => {
+  const roll = Math.floor(Math.random() * 6) + 1;
+  const extraSpins = 3 + Math.floor(Math.random() * 5); 
+  
+  let targetX = 0;
+  let targetY = 0;
+
+  switch (roll) {
+    case 1: targetX = 0;   targetY = 0;   break;
+    case 6: targetX = 0;   targetY = 180; break;
+    case 3: targetX = 0;   targetY = -90; break;
+    case 4: targetX = 0;   targetY = 90;  break;
+    case 2: targetX = -90; targetY = 0;   break;
+    case 5: targetX = 90;  targetY = 0;   break;
   }
 
-  // Apply the extra spins
-  x += randomSpins * 360;
-  y += randomSpins * 360;
+  // Keep adding to the rotation so it always spins forward
+  currentX += (extraSpins * 360) + targetX;
+  currentY += (extraSpins * 360) + targetY;
 
-  // Apply the rotation and update text
-  dice.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+  dice.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
   resultText.textContent = "Rolling...";
 
-  // Wait for the CSS transition to finish before showing the result
   setTimeout(() => {
-    resultText.textContent = `You rolled a ${rollResult}!`;
-  }, 1000); 
+    resultText.textContent = `You rolled a ${roll}!`;
+  }, 1000);
 });
-
-// Register Service Worker for Offline Mode
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Offline capabilities enabled!"))
-    .catch(err => console.error("Offline setup failed", err));
-}
