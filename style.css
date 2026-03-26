@@ -36,42 +36,12 @@ body {
   border-radius: 20px;
   box-sizing: border-box;
   display: grid;
-  padding: 15px;
-  align-content: center;
-  justify-items: center;
-}
-
-/* 3D Positions */
-.front  { transform: rotateY(0deg) translateZ(75px); }
-.back   { transform: rotateY(180deg) translateZ(75px); }
-.right  { transform: rotateY(90deg) translateZ(75px); }
-.left   { transform: rotateY(-90deg) translateZ(75px); }
-.top    { transform: rotateX(90deg) translateZ(50px); }
-.bottom { transform: rotateX(-90deg) translateZ(50px); }
-
-/* Dice Styles */
-.dice-style-classic .face { background: white; }
-.dice-style-classic .dot { background: #222; }
-
-.dice-style-red .face { background: #dc3545; }
-.dice-style-red .dot { background: white; }
-
-.dice-style-white .face { background: white; border-color: #333; }
-.dice-style-white .dot { background: #222; }
-
-.dice-style-colorful .face.front { background: linear-gradient(45deg, #ff6b6b, #feca57); }
-.dice-style-colorful .face.back { background: linear-gradient(45deg, #48dbfb, #0abde3); }
-.dice-style-colorful .face.right { background: linear-gradient(45deg, #ff9ff3, #f368e0); }
-.dice-style-colorful .face.left { background: linear-gradient(45deg, #54a0ff, #2e86de); }
-.dice-style-colorful .face.top { background: linear-gradient(45deg, #5f27cd, #341f97); }
-.dice-style-colorful .face.bottom { background: linear-gradient(45deg, #00d2d3, #54a0ff); }
-.dice-style-colorful .dot { background: rgba(255, 255, 255, 0.9); box-shadow: 0 0 3px rgba(0,0,0,0.3); }
-
-.face {
-  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 0;
+  padding: 15px;
+  align-content: center;
+  justify-items: center;
 }
 
 .one .dot { grid-column: 2; grid-row: 2; }
