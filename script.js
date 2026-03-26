@@ -14,7 +14,7 @@ function rollDice() {
   isRolling = true;
   
   const roll = Math.floor(Math.random() * 6) + 1;
-  const extraSpins = 3 + Math.floor(Math.random() * 5); 
+  const extraSpins = 5 + Math.floor(Math.random() * 5); // 5-9 full rotations for consistent rolling
   
   let targetX = 0;
   let targetY = 0;
@@ -28,7 +28,7 @@ function rollDice() {
     case 5: targetX = 90;  targetY = 0;   break;
   }
 
-  dice.style.transform = `rotateY(${currentY + extraSpins * 360 + targetY}deg) rotateX(${currentX + extraSpins * 360 + targetX}deg)`;
+  dice.style.transform = `rotateY(${extraSpins * 360 + targetY}deg) rotateX(${extraSpins * 360 + targetX}deg)`;
   resultText.textContent = "Rolling...";
 
   setTimeout(() => {
