@@ -1,5 +1,6 @@
 const dice = document.getElementById('dice');
 const resultText = document.getElementById('result');
+const styleButtons = document.querySelectorAll('.style-btn');
 
 let currentX = 0;
 let currentY = 0;
@@ -7,6 +8,29 @@ let isRolling = false; // Prevents rolling again while already spinning
 let shakeEnabled = false;
 let lastShakeTime = 0;
 const SHAKE_DEBOUNCE = 500; // Prevent multiple rolls from single shake
+
+// --- STYLE SWITCHING ---
+function setDiceStyle(style) {
+  // Remove all style classes
+  dice.classList.remove('dice-style-classic', 'dice-style-red', 'dice-style-white', 'dice-style-colorful');
+  // Add the selected style
+  dice.classList.add(`dice-style-${style}`);
+  
+  // Update button states
+  styleButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.style === style);
+  });
+}
+
+// Initialize with classic style
+setDiceStyle('classic');
+
+// Add event listeners to style buttons
+styleButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    setDiceStyle(btn.dataset.style);
+  });
+});
 
 // --- THE ROLLING LOGIC ---
 function rollDice() {

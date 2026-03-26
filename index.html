@@ -11,7 +11,7 @@
 <body>
 
   <div class="scene">
-    <div class="cube" id="dice">
+    <div class="cube dice-style-classic" id="dice">
       <div class="face front one"><div class="dot"></div></div>
       <div class="face back six">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
@@ -35,6 +35,13 @@
   </div>
 
   <p id="result">Tap the dice to roll!</p>
+
+  <div class="style-selector">
+    <button class="style-btn active" data-style="classic">Classic</button>
+    <button class="style-btn" data-style="red">Red</button>
+    <button class="style-btn" data-style="white">White</button>
+    <button class="style-btn" data-style="colorful">Colorful</button>
+  </div>
 
   <script src="script.js?v=2"></script>
 </body>
