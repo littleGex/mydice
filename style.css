@@ -33,10 +33,12 @@ body {
   height: 100px;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 15px;
+  border-radius: 20px;
   box-sizing: border-box;
-  display: flex;
-  padding: 12px;
+  display: grid;
+  padding: 10px;
+  align-content: center;
+  justify-items: center;
 }
 
 /* 3D Positions */
@@ -48,17 +50,51 @@ body {
 .bottom { transform: rotateX(-90deg) translateZ(50px); }
 
 /* Dots */
-.dot { width: 18px; height: 18px; background: #222; border-radius: 50%; }
+.dot { width: 16px; height: 16px; background: #222; border-radius: 50%; }
 
-.one { justify-content: center; align-items: center; }
-.two { justify-content: space-between; flex-direction: column; }
-.two .dot:last-child { align-self: flex-end; }
-.three { justify-content: space-between; flex-direction: column; }
-.three .dot:nth-child(2) { align-self: center; }
-.three .dot:last-child { align-self: flex-end; }
-.four, .six { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.five { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 5px; }
-.five .dot:nth-child(5) { grid-column: 1 / span 2; grid-row: 2; justify-self: center; }
-.six { grid-template-rows: repeat(3, 1fr); }
+.one {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.two {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: stretch;
+}
+.two .dot:first-child { justify-self: start; }
+.two .dot:last-child { justify-self: end; }
+
+.three {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: stretch;
+}
+.three .dot:nth-child(1) { justify-self: start; }
+.three .dot:nth-child(2) { justify-self: center; }
+.three .dot:nth-child(3) { justify-self: end; }
+
+.four {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+}
+
+.five {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 4px;
+}
+.five .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.five .dot:nth-child(2) { grid-column: 1; grid-row: 3; }
+.five .dot:nth-child(3) { grid-column: 2; grid-row: 2; }
+.five .dot:nth-child(4) { grid-column: 3; grid-row: 1; }
+.five .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+
+.six {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 8px;
+}
 
 #result { margin-top: 50px; font-size: 20px; background: #333; padding: 10px 20px; border-radius: 20px; }

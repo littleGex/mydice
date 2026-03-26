@@ -28,14 +28,13 @@ function rollDice() {
     case 5: targetX = -90; targetY = 0;   break;
   }
 
-  currentX += (extraSpins * 360) + targetX;
-  currentY += (extraSpins * 360) + targetY;
-
-  dice.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+  dice.style.transform = `rotateY(${currentY + extraSpins * 360 + targetY}deg) rotateX(${currentX + extraSpins * 360 + targetX}deg)`;
   resultText.textContent = "Rolling...";
 
   setTimeout(() => {
     resultText.textContent = `You rolled a ${roll}!`;
+    currentX = targetX;
+    currentY = targetY;
     isRolling = false;
   }, 1000);
 }
@@ -45,8 +44,10 @@ function enableShake() {
   if (shakeEnabled) return; // Only enable once
   shakeEnabled = true;
   
-  // Check if iOS requires permission
-  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+  // Check if this is iOS Safari (requires explicit permission)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  
+  if (isIOS && typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
@@ -55,7 +56,7 @@ function enableShake() {
       })
       .catch(console.error);
   } else {
-    // Non-iOS devices don't need explicit permission
+    // Android and other devices don't need explicit permission prompts
     window.addEventListener('devicemotion', handleMotion);
   }
 }
