@@ -4,6 +4,9 @@ const resultText = document.getElementById('result');
 let currentX = 0;
 let currentY = 0;
 let isRolling = false; // Prevents rolling again while already spinning
+let shakeEnabled = false;
+let lastShakeTime = 0;
+const SHAKE_DEBOUNCE = 500; // Prevent multiple rolls from single shake
 
 // --- THE ROLLING LOGIC ---
 function rollDice() {
@@ -19,10 +22,10 @@ function rollDice() {
   switch (roll) {
     case 1: targetX = 0;   targetY = 0;   break;
     case 6: targetX = 0;   targetY = 180; break;
-    case 3: targetX = 0;   targetY = -90; break;
-    case 4: targetX = 0;   targetY = 90;  break;
-    case 2: targetX = -90; targetY = 0;   break;
-    case 5: targetX = 90;  targetY = 0;   break;
+    case 3: targetX = 0;   targetY = 90;  break;
+    case 4: targetX = 0;   targetY = -90; break;
+    case 2: targetX = 90;  targetY = 0;   break;
+    case 5: targetX = -90; targetY = 0;   break;
   }
 
   currentX += (extraSpins * 360) + targetX;
@@ -39,8 +42,11 @@ function rollDice() {
 
 // --- SHAKE DETECTION LOGIC ---
 function enableShake() {
+  if (shakeEnabled) return; // Only enable once
+  shakeEnabled = true;
+  
   // Check if iOS requires permission
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
@@ -54,16 +60,20 @@ function enableShake() {
   }
 }
 
-// Detect sharp movements
+// Detect sharp movements using proper acceleration magnitude
 function handleMotion(event) {
-  const threshold = 15; // How hard you have to shake it
+  const threshold = 25; // Adjusted threshold for proper shake detection
   const accel = event.accelerationIncludingGravity;
   
   if (!accel) return;
 
-  const totalAcceleration = Math.abs(accel.x) + Math.abs(accel.y) + Math.abs(accel.z);
+  // Calculate proper magnitude (Euclidean distance)
+  const magnitude = Math.sqrt(accel.x * accel.x + accel.y * accel.y + accel.z * accel.z);
   
-  if (totalAcceleration > threshold) {
+  // Debounce to prevent multiple rolls from single shake
+  const now = Date.now();
+  if (magnitude > threshold && (now - lastShakeTime) > SHAKE_DEBOUNCE) {
+    lastShakeTime = now;
     rollDice();
   }
 }
@@ -71,5 +81,8 @@ function handleMotion(event) {
 // --- EVENT LISTENERS ---
 dice.addEventListener('click', () => {
   rollDice();
-  enableShake(); // We ask for shake permission on the first tap
+  // Enable shake detection on first interaction (deferred to avoid permission spam)
+  if (!shakeEnabled) {
+    setTimeout(enableShake, 100);
+  }
 });
