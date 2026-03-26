@@ -22,10 +22,10 @@ function rollDice() {
   switch (roll) {
     case 1: targetX = 0;   targetY = 0;   break;
     case 6: targetX = 0;   targetY = 180; break;
-    case 3: targetX = 0;   targetY = 90;  break;
-    case 4: targetX = 0;   targetY = -90; break;
-    case 2: targetX = 90;  targetY = 0;   break;
-    case 5: targetX = -90; targetY = 0;   break;
+    case 3: targetX = 0;   targetY = -90; break;
+    case 4: targetX = 0;   targetY = 90;  break;
+    case 2: targetX = -90; targetY = 0;   break;
+    case 5: targetX = 90;  targetY = 0;   break;
   }
 
   dice.style.transform = `rotateY(${currentY + extraSpins * 360 + targetY}deg) rotateX(${currentX + extraSpins * 360 + targetX}deg)`;
