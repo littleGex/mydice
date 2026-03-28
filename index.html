@@ -3,38 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>3D Dice Roller</title>
-  
-  <link rel="stylesheet" href="style.css?v=2">
+  <title>3D Dice Bag</title>
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-  <div class="scene">
-    <div class="cube dice-style-classic" id="dice">
-      <div class="face front one"><div class="dot"></div></div>
-      <div class="face back six">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-      <div class="face right three">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-      <div class="face left four">
-        <div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div>
-      </div>
-      <div class="face top two">
-        <div class="dot"></div><div class="dot"></div>
-      </div>
-      <div class="face bottom five">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div>
-      </div>
-    </div>
+  <div class="controls">
+    <button id="remove-btn" class="control-btn">-</button>
+    <span id="dice-count">1 Dice</span>
+    <button id="add-btn" class="control-btn">+</button>
   </div>
 
-  <p id="result">Tap the dice to roll!</p>
+  <div id="dice-container"></div>
+
+  <button id="roll-btn">🎲 ROLL DICE 🎲</button>
+
+  <p id="result">Total: 1</p>
 
   <div class="style-selector">
     <button class="style-btn active" data-style="classic">Classic</button>
@@ -43,6 +28,6 @@
     <button class="style-btn" data-style="colorful">Colorful</button>
   </div>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
